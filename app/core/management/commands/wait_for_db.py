@@ -5,6 +5,7 @@ from psycopg2 import OperationalError as Psycopg2Error
 from django.core.management.base import BaseCommand
 from django.db.utils import OperationalError
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Waiting for database')
