@@ -53,7 +53,10 @@ class PublicRecipeTests(TestCase):
 class PrivateRecipeTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = create_user(email='test@example.com', password='testpassword')
+        self.user = create_user(
+            email='test@example.com',
+            password='testpassword'
+        )
         self.client.force_authenticate(self.user)
 
     def test_retrive_recipes(self):
@@ -68,7 +71,10 @@ class PrivateRecipeTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_recipe_list_limited_to_user(self):
-        other_user = create_user(email='other@example.com', password='otherpassword')
+        other_user = create_user(
+            email='other@example.com',
+            password='otherpassword'
+        )
         create_recipe(user=other_user)
         create_recipe(user=self.user)
 
@@ -145,7 +151,10 @@ class PrivateRecipeTests(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_update_user_returns_error(self):
-        new_user = create_user(email='test2@example.com', password='testpassword2')
+        new_user = create_user(
+            email='test2@example.com',
+            password='testpassword2'
+        )
         recipe = create_recipe(user=self.user)
 
         payload = {'user': new_user.id}
@@ -165,7 +174,10 @@ class PrivateRecipeTests(TestCase):
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
     def test_delete_other_users_recipe_error(self):
-        new_user = create_user(email='test2@example.com', password='testpassword2')
+        new_user = create_user(
+            email='test2@example.com',
+            password='testpassword2'
+        )
         recipe = create_recipe(user=new_user)
 
         url = detail_url(recipe.id)
